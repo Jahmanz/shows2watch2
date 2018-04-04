@@ -1,0 +1,29 @@
+<body>
+<h1>Welcome, {{userName}}!</h1>
+
+<form>
+  <input [(ngModel)]="userName" type="text" name="user">
+</form>
+
+<h1>Show list for{{month}}/{{day}}/{{year}}</h1>
+<h3>{{currentFocus}}</h3>
+<app-show-list [childShowList]="masterShowList" (clickSender)="editShow($event)"></app-show-list>
+
+
+ <div *ngIf="selectedShow">
+ <h3>{{selectedShow.description}}</h3>
+ <p>Show Complete? {{selectedShow.done}}</p>
+ <h3>Edit Show</h3>
+ <label>Enter Show Description:</label>
+ <input [(ngModel)]="selectedShow.description">
+ <label>Enter Show Priority (1-3):</label>
+ <br>
+ <input type="radio" [(ngModel)]="selectedShow.priority" [value]="1">1 (Low Priority)<br>
+ <input type="radio" [(ngModel)]="selectedShow.priority" [value]="2">2 (Medium Priority)<br>
+ <input type="radio" [(ngModel)]="selectedShow.priority" [value]="3">3 (High Priority)
+ <app-edit-show [childSelectedShow]="selectedShow" (clickedDone)="finishedEditing()"></app-edit-show>
+</div>
+
+<app-edit-show [childSelectedShow]="selectedShow" (doneButtonClickedSender)="finishedEditing()"></app-edit-show>
+<app-new-show (sendShow)="addShow($event)"></app-new-show>
+</body>
